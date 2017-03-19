@@ -32,6 +32,18 @@ El controlador retorna un arreglo bidimensional de T posiciones que contiene el 
 .- Las operaciones de tipo QUERY realizan la sumatoria de los valores en las posiciones de la matriz que se encuentren dentro de las coordenadas X1, Y1, Z1 y X2, Y2, Z2.
 El controlador retorna un arreglo que contiene todos los resultados de las operaciones de tipo QUERY para todos los test cases que será mostrado en el orden de ejecución como texto de salida en la vista.
 
+/********************* CODE REFACTORING DESCRIPTION *********************/
+
+La refactorización de código realizada fue la siguiente:
+1.- Agregar una variable con el valor de Input::get('driver_id') porque se consulta en tres partes innecesariamente ya que el valor es constante al ser un parámetro de entrada.
+2.- Renombrar la variable que contiene Input::get('service_id') de $id a $inputServiceId ya que se manejan varios id y puede ser confuso.
+3.- Renombrar la variable $servicio a $service para mantener la nomenclatura en inglés en todas las variables.
+4.- Agregar una variable con el valor de $service->status_id porque se consulta en dos validaciones innecesariamente ya que el valor es constante y para mejorar la legibilidad del código.
+5.- Actualizar la entidad Driver primero ya que la entidad Service depende de información asociada a Driver y luego actualizar una única vez la entidad Service con toda la data, en vez de realizar dos consultas update sobre Service.
+6.- Comentar y colocar fuera de la función la versión de código antigua inutilizada, es bueno tenerla como referencia pero dificulta la legibilidad estando dentro del código actual.
+7.- Agregar una variable con el valor de array('serviceId' => $service->id) para mejorar la legibilidad en el paso de parámetros en común para ambos casos de tipo de usuario.
+
+/********************* THEORETICAL QUESTIONS *********************/
 
 1.- El principio de responsabilidad única está relacionado con el paradigma de Programación Orientada a Objetos porque indica que cada clase o módulo debe tener una funcionalidad única y específica que de la mano con la encapsulación permite definir, diferenciar e interrelacionar más fácilmente cada rol o parte dentro del sistema. Por ejemplo, dada mi implementación de coding challenge, cada controlador tiene su propósito único, la clase InputController se dedica a realizar todas las validaciones necesarias para cumplir con el formato de entrada esperado. Por su parte la clase SummationController delegando este primer paso de validaciones a InputController, únicamente es responsable de realizar las operaciones solicitadas.
 
