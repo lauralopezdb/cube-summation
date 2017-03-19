@@ -34,7 +34,7 @@ El controlador retorna un arreglo que contiene todos los resultados de las opera
 
 /********************* CODE REFACTORING DESCRIPTION *********************/
 
-La refactorización de código realizada fue la siguiente:
+La refactorización de código realizada se encuentra en resources/views/codeRefactoring.php y fue la siguiente:
 1.- Agregar una variable con el valor de Input::get('driver_id') porque se consulta en tres partes innecesariamente ya que el valor es constante al ser un parámetro de entrada.
 2.- Renombrar la variable que contiene Input::get('service_id') de $id a $inputServiceId ya que se manejan varios id y puede ser confuso.
 3.- Renombrar la variable $servicio a $service para mantener la nomenclatura en inglés en todas las variables.
