@@ -1,40 +1,31 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+La capa de presentación está representada por un única vista ubicada en resources/views/index.blade.php que contiene código HTML para mostrar mediante un formulario los campos que permitirán al usuario:
+.- El ingreso de texto de entrada (input format).
+.- Visualización de mensajes de error en caso de que existan datos inválidos en el texto de entrada.
+.- Visualización de texto de salida o mensaje de respuesta (output).
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+La capa de lógica de negocios está representada por un script de JS y dos controladores:
+1.- public/js/cube.js: este script es enlazado en la vista y contiene los métodos para el llamado ajax de ambos controladores tomando como parámetro el texto de entrada. 
+El primer método (validate) se ejecuta con el evento onSubmit del formulario y permite actualizar la vista con mensajes de los posibles errores presentes en el texto de entrada. 
+El segundo método (operate) es un método anidado del primero que se ejecuta cuando el texto de entrada es correcto y permite actualizar la vista con el texto de salida, mostrando el resultado de las operaciones de tipo QUERY realizadas para cada test case.
 
-## About Laravel
+2.- app/Http/Controllers/InputController.php: este controlador se ejecuta por medio del llamado ajax del primer método JS (validate) y se encarga de recorrer el texto de entrada por cada línea para realizar las siguientes validaciones:
+.- La primera línea debe contener un único valor numérico T, para la cantidad de test cases a esperar.
+.- T debe tener un valor entre 1 y 50. 
+.- La línea incial de cada test case debe contener dos valores numéricos N y M separados por un espacio simple, para la dimensión de la matriz a crear y la cantidad de operaciones a realizar en esa matriz, respectivamente.
+.- N debe tener un valor entre 1 y 100.
+.- M debe tener un valor entre 1 y 1000.
+.- Luego de la línea inicial de cada test case, deben existir M cantidad de líneas de operaciones a continuación.
+.- Las líneas de operación deben ser de tipo UPDATE o QUERY.
+.- Las líneas de operación UPDATE deben contener cuatro parámetros de valor numérico X, Y, Z, W.
+.- X, Y, Z deben tener un valor entre 1 y N.
+.- W debe tener un valor entre -10^9 y 10^9.
+.- Las líneas de operación QUERY deben contener seis parámetros de valor numérico X1, Y1, Z1, X2, Y2, Z2.
+.- X1, Y1, Z1 deben tener un valor entre 1 y N y deben ser menor o igual a x2, Y2, Z2 respectivamente.
+El controlador retorna un arreglo bidimensional de T posiciones que contiene el valor N y las operaciones para cada test case a realizar a continuación.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+3.- app/Http/Controllers/SummationController.php: este controlador se ejecuta por medio del llamado ajax del segundo método JS (operate) tomando como parámetro la respuesta retornada por el método anterior y es responsable de realizar los dos propósitos de cada test case dado en el texto de entrada:
+3.1.- Crear la matriz tridimensional (según el valor N) con valor inicial cero para todas las posiciones de la matriz.
+3.2.- Realizar las M operaciones sobre la matriz de la siguiente manera:
+.- Las operaciones de tipo UPDATE asignan el valor W en la posición de la matriz con coodernadas X, Y, Z.
+.- Las operaciones de tipo QUERY realizan la sumatoria de los valores en las posiciones de la matriz que se encuentren dentro de las coordenadas X1, Y1, Z1 y X2, Y2, Z2.
+El controlador retorna un arreglo que contiene todos los resultados de las operaciones de tipo QUERY para todos los test cases que será mostrado en el orden de ejecución como texto de salida en la vista.
