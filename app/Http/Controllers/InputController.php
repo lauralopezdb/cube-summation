@@ -71,7 +71,7 @@ class InputController extends BaseController
                         }
                         $iter++;
                         $test_cases[$iter]['n'] = $n;
-                        $test_cases[$iter]['operation'] = array();
+                        $test_cases[$iter]['operations'] = array();
                         break;
                     // Test case operations                        
                     default:
@@ -94,7 +94,7 @@ class InputController extends BaseController
                                         return $msg;
                                     } else {
                                         $oper_line = 'update ' . $x . ' ' . $y . ' ' . $z . ' ' . $w;
-                                        array_push($test_cases[$iter]['operation'], $oper_line);
+                                        array_push($test_cases[$iter]['operations'], $oper_line);
                                     }
                                 } else {
                                     $msg = 'Parameters incorrect for UPDATE operation';
@@ -119,7 +119,7 @@ class InputController extends BaseController
                                         return $msg;
                                     } else {
                                         $oper_line = 'query ' . $x1 . ' ' . $y1 . ' ' . $z1 . ' ' . $x2 . ' ' . $y2 . ' ' . $z2;
-                                        array_push($test_cases[$iter]['operation'], $oper_line);
+                                        array_push($test_cases[$iter]['operations'], $oper_line);
                                     }
                                 } else {
                                     $msg = 'Parameters incorrect for QUERY operation';

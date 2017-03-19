@@ -10,12 +10,24 @@ function validate() {
        url:'/validate-input',
        data: { 'inputText': inputText },
        success:function(data){
-       	if (Array.isArray(data)) {
-       		//Send test cases
-       	} else {
-        	$("#errorMessage").html(data);
-       	}
-       	console.log(data);
+	       	if (typeof(data) == 'object') {
+	       		operate(data);
+	       	} else {
+	       		$('textarea[name="outputText"]')[0].value = '';
+	        	$("#errorMessage").html(data);
+	       	}
        }
     });
+}
+
+function operate(data) {
+	$.ajax({
+       type:'POST',
+       url:'/process-test-cases',
+       data: { 'testCases': data },
+       success:function(result){
+       		$("#errorMessage").html('');
+       		$('textarea[name="outputText"]')[0].value = result.join("\n");
+       }
+	});	
 }

@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('/validate-input','InputController@validate');
+
+Route::post('/process-test-cases','SummationController@operate');
