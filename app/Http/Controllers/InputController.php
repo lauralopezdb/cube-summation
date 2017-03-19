@@ -86,15 +86,15 @@ class InputController extends BaseController
                                     $y = intval($operation[2]);
                                     $z = intval($operation[3]);
                                     $w = intval($operation[4]);
-                                    if ($x <= 0 || $x > $n || 
-                                        $y <= 0 || $y > $n || 
-                                        $z <= 0 || $z > $n || 
-                                        $w < pow(-10, 9) || $w > pow(10, 9)) {
-                                        $msg = 'Parameters incorrect for UPDATE operation';
-                                        return $msg;
-                                    } else {
+                                    if ($x >= 1 && $x <= $n &&
+                                        $y >= 1 && $y <= $n && 
+                                        $z >= 1 && $z <= $n && 
+                                        $w >= pow(-10, 9) && $w <= pow(10, 9)) {
                                         $oper_line = 'update ' . $x . ' ' . $y . ' ' . $z . ' ' . $w;
                                         array_push($test_cases[$iter]['operations'], $oper_line);
+                                    } else {
+                                        $msg = 'Parameters incorrect for UPDATE operation';
+                                        return $msg;
                                     }
                                 } else {
                                     $msg = 'Parameters incorrect for UPDATE operation';
@@ -112,14 +112,14 @@ class InputController extends BaseController
                                     $x2 = intval($operation[4]);
                                     $y2 = intval($operation[5]);
                                     $z2 = intval($operation[6]);
-                                    if ($x1 <= 0 || $x1 > $x2 || $x2 > $n || 
-                                        $y1 <= 0 || $y1 > $y2 || $y2 > $n ||
-                                        $z1 <= 0 || $z1 > $z2 || $z2 > $n) {
-                                        $msg = 'Parameters incorrect for QUERY operation';
-                                        return $msg;
-                                    } else {
+                                    if ($x1 >= 1 && $x1 <= $x2 && $x2 <= $n && 
+                                        $y1 >= 1 && $y1 <= $y2 && $y2 <= $n &&
+                                        $z1 >= 1 && $z1 <= $z2 && $z2 <= $n) {
                                         $oper_line = 'query ' . $x1 . ' ' . $y1 . ' ' . $z1 . ' ' . $x2 . ' ' . $y2 . ' ' . $z2;
                                         array_push($test_cases[$iter]['operations'], $oper_line);
+                                    } else {
+                                        $msg = 'Parameters incorrect for QUERY operation';
+                                        return $msg;
                                     }
                                 } else {
                                     $msg = 'Parameters incorrect for QUERY operation';
