@@ -1,3 +1,5 @@
+/********************* CODING CHALLENGE IMPLEMENTATION DESCRIPTION *********************/
+
 La capa de presentación está representada por un única vista ubicada en resources/views/index.blade.php que contiene código HTML para mostrar mediante un formulario los campos que permitirán al usuario:
 .- El ingreso de texto de entrada (input format).
 .- Visualización de mensajes de error en caso de que existan datos inválidos en el texto de entrada.
@@ -29,3 +31,14 @@ El controlador retorna un arreglo bidimensional de T posiciones que contiene el 
 .- Las operaciones de tipo UPDATE asignan el valor W en la posición de la matriz con coodernadas X, Y, Z.
 .- Las operaciones de tipo QUERY realizan la sumatoria de los valores en las posiciones de la matriz que se encuentren dentro de las coordenadas X1, Y1, Z1 y X2, Y2, Z2.
 El controlador retorna un arreglo que contiene todos los resultados de las operaciones de tipo QUERY para todos los test cases que será mostrado en el orden de ejecución como texto de salida en la vista.
+
+
+1.- El principio de responsabilidad única está relacionado con el paradigma de Programación Orientada a Objetos porque indica que cada clase o módulo debe tener una funcionalidad única y específica que de la mano con la encapsulación permite definir, diferenciar e interrelacionar más fácilmente cada rol o parte dentro del sistema. Por ejemplo, dada mi implementación de coding challenge, cada controlador tiene su propósito único, la clase InputController se dedica a realizar todas las validaciones necesarias para cumplir con el formato de entrada esperado. Por su parte la clase SummationController delegando este primer paso de validaciones a InputController, únicamente es responsable de realizar las operaciones solicitadas.
+
+2.- Un buen código o código limpio, en mi opinión debe presentar lo siguiente: 
+.- Tener la indentación correcta de anidación, apertura, cierre para mejor legibilidad.
+.- Utilizar nombres relacionados con la funcionalidad, que sean descriptivos, para archivos, clases, métodos, variables.
+.- No reescribir bloques de códigos, si se requiere un mismo bloque más de una vez, debe estar en único lugar y ser llamado para cada caso que se necesite.
+.- Desarrollar las funcionalidades lo más sencillo posible descomponiendo en submódulos los procesos complejos y/o largos.
+.- Contar con el principio de responsabilidad única para facilitar en entendimiento.
+.- Agregar comentarios en operaciones complejas o ambiguas para futuras modificaciones en el código escrito.
